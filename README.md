@@ -1,7 +1,26 @@
-# liquibase-clickhouse [![maven][maven-image]][maven-url]
-                       
-[maven-image]: https://img.shields.io/maven-central/v/com.mediarithmics/liquibase-clickhouse.svg?maxAge=259200&style=for-the-badge&color=brithgreen&label=com.mediarithmics:liquibase-clickhouse
-[maven-url]: https://search.maven.org/search?q=a:liquibase-clickhouse
+# Beekeeper Liquibase Clickhouse
+
+This is the parent repository for Beekeeper Liquibase Clickhouse, a liquibase extension for Clickhouse.
+
+## Usage
+
+### Compiling
+
+`./mvnw package -s settings.xml`
+
+### Installing snapshots for local development
+
+You can install the current state into the local Maven repository with
+`./mvnw install -s settings.xml`
+
+The version will be `SNAPSHOT`
+
+### Releasing
+Make sure you bump the version in `version.properties`. The release will be done by our [jenkins-job](https://jenkins.internal.beekeeper.io/job/libs/job/quarkus-extensions/) when the PR branch is merged back to master.
+Please add your and explain your change to the changelog below.
+
+
+# liquibase-clickhouse
 Supported operations: update, rollback (with provided SQL script), tag
 
 

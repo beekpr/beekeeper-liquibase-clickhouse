@@ -19,6 +19,10 @@ The version will be `SNAPSHOT`
 Make sure you bump the version in `version.properties`. The release will be done by our [jenkins-job](https://jenkins.internal.beekeeper.io/job/libs/job/quarkus-extensions/) when the PR branch is merged back to master.
 Please add your and explain your change to the changelog below.
 
+#### Local Release
+
+`./mvnw -Drevision=${VERSION} -U clean deploy -s settings.xml`
+
 
 # liquibase-clickhouse
 Supported operations: update, rollback (with provided SQL script), tag

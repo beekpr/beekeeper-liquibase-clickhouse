@@ -29,7 +29,9 @@
         <compiler.plugin.version>3.8.1</compiler.plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <maven-shade-plugin.version>3.5.0</maven-shade-plugin.version>
         <clickhouse-jdbc.version>0.4.6</clickhouse-jdbc.version>
         <liquibase.version>4.7.0</liquibase.version>
         <jboss-logging.version>3.5.3.Final</jboss-logging.version>
@@ -102,12 +104,60 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler.plugin.version}</version>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>shaded</shadedClassifierName>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.</pattern>
+                                    <shadedPattern>shaded.liquibase.com.</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>net.</pattern>
+                                    <shadedPattern>shaded.liquibase.net.</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.</pattern>
+                                    <shadedPattern>shaded.liquibase.org.</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>ru.</pattern>
+                                    <shadedPattern>shaded.liquibase.ru.</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

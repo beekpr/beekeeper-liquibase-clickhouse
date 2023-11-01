@@ -35,7 +35,14 @@ public class ParamsLoader {
   private static ClusterConfig liquibaseClickhouseProperties = null;
 
   private static Set<String> validProperties =
-      new HashSet<>(Arrays.asList("clusterName", "tableZooKeeperPathPrefix", "tableReplicaName"));
+      new HashSet<>(
+          Arrays.asList(
+              "clusterName",
+              "tableZooKeeperPathPrefix",
+              "tableReplicaName",
+              "useParameterlessReplicatedMergeTreeForTables"
+          )
+      );
 
   private static StringBuilder appendWithComma(StringBuilder sb, String text) {
     if (sb.length() > 0) sb.append(", ");
@@ -97,7 +104,8 @@ public class ParamsLoader {
           new ClusterConfig(
               params.get("clusterName"),
               params.get("tableZooKeeperPathPrefix"),
-              params.get("tableReplicaName"));
+              params.get("tableReplicaName"),
+              params.get("useParameterlessReplicatedMergeTreeForTables"));
 
       LOG.info(
           "Cluster settings ("

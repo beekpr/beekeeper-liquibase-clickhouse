@@ -23,14 +23,20 @@ public class ClusterConfig {
   private String clusterName;
   private String tableZooKeeperPathPrefix;
   private String tableReplicaName;
+  private  String useParameterlessReplicatedMergeTreeForTables;
 
   public ClusterConfig() {}
 
   public ClusterConfig(
-      String clusterName, String tableZooKeeperPathPrefix, String tableReplicaName) {
+      String clusterName,
+      String tableZooKeeperPathPrefix,
+      String tableReplicaName,
+      String useParameterlessReplicatedMergeTreeForTables
+  ) {
     this.clusterName = clusterName;
     this.tableZooKeeperPathPrefix = tableZooKeeperPathPrefix;
     this.tableReplicaName = tableReplicaName;
+    this.useParameterlessReplicatedMergeTreeForTables = useParameterlessReplicatedMergeTreeForTables;
   }
 
   public String getClusterName() {
@@ -55,5 +61,13 @@ public class ClusterConfig {
 
   public void setTableReplicaName(String tableReplicaName) {
     this.tableReplicaName = tableReplicaName;
+  }
+
+  public String getUseParameterlessReplicatedMergeTreeForTables() {
+    return useParameterlessReplicatedMergeTreeForTables;
+  }
+
+  public void setUseParameterlessReplicatedMergeTreeForTables(String useParameterlessReplicatedMergeTreeForTables) {
+    this.useParameterlessReplicatedMergeTreeForTables = useParameterlessReplicatedMergeTreeForTables;
   }
 }

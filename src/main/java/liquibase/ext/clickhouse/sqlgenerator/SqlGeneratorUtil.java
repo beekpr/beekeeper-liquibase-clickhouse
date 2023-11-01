@@ -47,11 +47,17 @@ class SqlGeneratorUtil {
   }
 
   public static String generateSqlEngineClause(ClusterConfig properties, String tableName) {
-    if (properties != null)
-      return String.format(
-          "ENGINE ReplicatedMergeTree('%s','%s') ORDER BY ID",
-          properties.getTableZooKeeperPathPrefix() + tableName.toLowerCase(Locale.ROOT),
-          properties.getTableReplicaName());
-    else return "ENGINE MergeTree() ORDER BY ID";
+    if (properties != null) {
+      if (properties.getUseParameterlessReplicatedMergeTreeForTables().equals("true")) {
+        return "ENGINE ReplicatedMergeTree ORDER BY ID";
+      } else {
+        return String.format(
+            "ENGINE ReplicatedMergeTree('%s','%s') ORDER BY ID",
+            properties.getTableZooKeeperPathPrefix() + tableName.toLowerCase(Locale.ROOT),
+            properties.getTableReplicaName());
+      }
+    } else {
+      return "ENGINE MergeTree() ORDER BY ID";
+    }
   }
 }

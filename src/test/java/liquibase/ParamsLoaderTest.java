@@ -33,6 +33,7 @@ public class ParamsLoaderTest {
     assert (params.getClusterName().equals("Cluster1"));
     assert (params.getTableZooKeeperPathPrefix().equals("Path1"));
     assert (params.getTableReplicaName().equals("Replica1"));
+    assert (params.getUseParameterlessReplicatedMergeTreeForTables().equals("false"));
   }
 
   @Test

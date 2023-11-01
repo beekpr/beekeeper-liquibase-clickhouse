@@ -24,6 +24,24 @@ Please add your and explain your change to the changelog below.
 `./mvnw -Drevision=${VERSION} -U clean deploy -s settings.xml`
 
 
+### Beekeeper Changes
+
+##### Added `useParameterlessReplicatedMergeTreeForTables` parameter
+
+This parameter allows to use simple `ReplicatedMergeTree` for changelog tables instead of passing in shard and prefix.
+
+```
+cluster {
+    clusterName="{cluster}"
+    tableZooKeeperPathPrefix="/clickhouse/tables/{shard}/{database}/"
+    tableReplicaName="{replica}"
+    useParameterlessReplicatedMergeTreeForTables="{true/false}"
+}
+```
+
+# Original Docs
+
+
 # liquibase-clickhouse
 Supported operations: update, rollback (with provided SQL script), tag
 
@@ -44,6 +62,7 @@ cluster {
     clusterName="{cluster}"
     tableZooKeeperPathPrefix="/clickhouse/tables/{shard}/{database}/"
     tableReplicaName="{replica}"
+    useParameterlessReplicatedMergeTreeForTables="{true/false}"
 }
 ```
 In this mode, liquibase will create its own tables as replicated.<br/>

@@ -32,7 +32,7 @@
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.5.0</maven-shade-plugin.version>
-        <clickhouse-jdbc.version>0.5.0</clickhouse-jdbc.version>
+        <clickhouse-jdbc.version>0.6.0</clickhouse-jdbc.version>
         <liquibase.version>4.7.0</liquibase.version>
         <jboss-logging.version>3.5.3.Final</jboss-logging.version>
         <slf4j-reload.version>2.0.7</slf4j-reload.version>

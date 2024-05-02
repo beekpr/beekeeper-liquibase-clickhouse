@@ -66,6 +66,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.lz4</groupId>
             <artifactId>lz4-java</artifactId>
             <version>1.8.0</version>
@@ -108,6 +114,11 @@
             <artifactId>httpclient5</artifactId>
             <version>5.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.core5</groupId>
+            <artifactId>httpcore5-h2</artifactId>
+            <version>5.3-alpha2</version>
+        </dependency>
 
     </dependencies>
 
@@ -148,24 +159,22 @@
                         <configuration>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>shaded</shadedClassifierName>
-                            <relocations>
-                                <relocation>
-                                    <pattern>com.</pattern>
-                                    <shadedPattern>shaded.liquibase.com.</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>net.</pattern>
-                                    <shadedPattern>shaded.liquibase.net.</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.</pattern>
-                                    <shadedPattern>shaded.liquibase.org.</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>ru.</pattern>
-                                    <shadedPattern>shaded.liquibase.ru.</shadedPattern>
-                                </relocation>
-                            </relocations>
+                            <minimizeJar>true</minimizeJar>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.clickhouse:clickhouse-jdbc</include>
+                                    <include>org.lz4:lz4-java</include>
+                                    <include>org.liquibase:liquibase-core</include>
+                                    <include>org.jboss.logging:jboss-logging</include>
+                                    <include>org.slf4j:slf4j-reload4j</include>
+                                    <include>org.slf4j:slf4j-api</include>
+                                    <include>org.yaml:snakeyaml</include>
+                                    <include>com.typesafe:config</include>
+                                    <include>org.apache.httpcomponents.core5:httpcore5</include>
+                                    <include>org.apache.httpcomponents.client5:httpclient5</include>
+                                    <include>org.apache.httpcomponents.core5:httpcore5-h2</include>
+                                </includes>
+                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>

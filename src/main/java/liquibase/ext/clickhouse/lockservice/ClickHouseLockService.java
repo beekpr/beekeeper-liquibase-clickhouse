@@ -19,6 +19,9 @@
  */
 package liquibase.ext.clickhouse.lockservice;
 
+import liquibase.database.ObjectQuotingStrategy;
+import liquibase.database.core.MSSQLDatabase;
+import liquibase.exception.LockException;
 import liquibase.ext.clickhouse.database.ClickHouseDatabase;
 
 import liquibase.Scope;
@@ -31,6 +34,7 @@ import liquibase.executor.ExecutorService;
 import liquibase.lockservice.StandardLockService;
 import liquibase.logging.Logger;
 import liquibase.statement.core.RawSqlStatement;
+import liquibase.statement.core.UnlockDatabaseChangeLogStatement;
 
 public class ClickHouseLockService extends StandardLockService {
 
@@ -83,6 +87,35 @@ public class ClickHouseLockService extends StandardLockService {
               String.format("No %s table available", database.getDatabaseChangeLogLockTableName()));
     }
     return hasTable;
+  }
+
+
+  @Override
+  public void releaseLock() throws LockException {
+    Executor executor = Scope.getCurrentScope().getSingleton(ExecutorService.class).getExecutor("jdbc", database);
+    try {
+      if (this.hasDatabaseChangeLogLockTable()) {
+        executor.comment("Release Database Lock");
+        database.rollback();
+        int updatedRows = executor.update(new UnlockDatabaseChangeLogStatement());
+        if (updatedRows == -1) {
+          Scope.getCurrentScope()
+              .getLog(getClass())
+              .info("Got -1 rows affected when releasing change log lock but this is expected for a ClickHouse cluster");
+        }
+        database.commit();
+      }
+    } catch (Exception e) {
+      throw new LockException(e);
+    } finally {
+      try {
+        hasChangeLogLock = false;
+
+        database.setCanCacheLiquibaseTableInfo(false);
+        Scope.getCurrentScope().getLog(getClass()).info("Successfully released change log lock");
+        database.rollback();
+      } catch (DatabaseException e) {}
+    }
   }
 
   private Executor getExecutor() {

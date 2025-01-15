@@ -37,7 +37,7 @@ public class ClickHouseTest {
 
   @Container
   static ClickHouseContainer clickHouseContainer =
-      new ClickHouseContainer("clickhouse/clickhouse-server:23.7.4.5");
+      new ClickHouseContainer("clickhouse/clickhouse-server:24.3.12");
 
   @Test
   void canInitializeLiquibaseSchema() {
